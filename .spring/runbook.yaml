@@ -1,0 +1,97 @@
+spring: "1.0"
+
+name: Project Setup
+description: "Local dev setup for Twenty CRM. The backend stack (Postgres, Redis, twenty-server, twenty-worker) runs in Docker Compose; only the frontend (twenty-front) runs on the host so UI hot-reload stays fast. Re-running this runbook is safe: docker compose up -d is idempotent, named volumes persist DB state, and generated secrets are not regenerated when .env already exists. Backend reachable at http://localhost:3000, frontend at http://localhost:3001."
+
+prerequisites:
+  - name: Docker
+    check: docker info
+    required: true
+  - name: Docker Compose v2
+    check: docker compose version
+    required: true
+  - name: fnm + Node.js 24.5.0
+    check: /opt/homebrew/bin/fnm list | grep -q v24.5.0
+    required: true
+  - name: Yarn (via Corepack)
+    check: "bash -c 'eval \"$(/opt/homebrew/bin/fnm env)\"; fnm use 24.5.0 >/dev/null 2>&1; yarn --version'"
+    required: true
+
+steps:
+  - name: Free app ports if in use
+    # Only 3001 (twenty-front) runs on the host; 3000/5433/6379 are published by
+    # the Docker backend stack and managed idempotently by `docker compose up`.
+    # IMPORTANT: never kill-port the Docker-published ports. On macOS Docker
+    # Desktop those ports are served by the single `com.docker.backend` process,
+    # so `kill-port 5433/6379/3000` SIGKILLs the whole daemon + VM (there is no
+    # throwaway per-port docker-proxy to re-bind, unlike on Linux). That is what
+    # made `docker compose up` fail with "Cannot connect to the Docker daemon".
+    run: npx kill-port 3001 || true
+    optional: true
+
+  - name: Create backend .env (first run only)
+    # .env is gitignored, so each clone needs its own copy of the committed
+    # template. The template's APP_SECRET / ENCRYPTION_KEY are hardcoded
+    # dev-only values shared across all clones — that's what lets multiple
+    # clones drive the same compose project without mid-stream secret drift.
+    # `cp -n` won't clobber a local override if the user has customised .env.
+    run: cp -n .spring/backend/.env.example .spring/backend/.env || true
+
+  - name: Start backend stack (Postgres, Redis, server, worker)
+    # `up -d --wait` is idempotent: it skips containers that are already up
+    # with the same config, only restarts ones whose env/image changed, and
+    # blocks until every service's healthcheck passes. Volumes persist, so
+    # the DB survives `down` and is reused on the next `up`. Schema
+    # migrations run automatically inside the server's entrypoint — the
+    # healthcheck won't pass until they finish.
+    run: |
+      cd .spring/backend
+      docker compose up -d --wait
+
+  - name: Seed demo workspace (first run only)
+    # `workspace:seed:dev` truncates and reseeds, so we only run it once and
+    # stamp the server-local-data volume. The stamp survives `compose down`
+    # (named volume), so re-running the runbook is a no-op once seeded. Wipe
+    # the stamp + run `docker compose down -v` to start fresh.
+    run: |
+      cd .spring/backend
+      docker compose exec -T server sh -c '
+        STAMP=/app/packages/twenty-server/.local-storage/.seeded
+        if [ -f "$STAMP" ]; then
+          echo "Already seeded — skipping."
+          exit 0
+        fi
+        yarn command:prod workspace:seed:dev && touch "$STAMP"
+      '
+
+  - name: Install frontend dependencies
+    run: |
+      export PATH="/opt/homebrew/bin:$PATH"
+      eval "$(fnm env)"
+      fnm use 24.5.0
+      yarn install
+
+  - name: Configure twenty-front .env
+    run: |
+      cp -n packages/twenty-front/.env.example packages/twenty-front/.env || true
+
+  - name: Start frontend dev server
+    run: |
+      export PATH="/opt/homebrew/bin:$PATH"
+      eval "$(fnm env)"
+      fnm use 24.5.0
+      npx nx run twenty-front:start
+    background: true
+    ready_when:
+      type: http
+      url: "http://localhost:3001/"
+      timeout: "300s"
+
+teardown:
+  # `down` stops + removes containers but keeps named volumes, so the next
+  # `up` resumes from the last DB state. Use `down -v` manually for a wipe.
+  - name: Stop backend stack
+    run: |
+      cd .spring/backend
+      docker compose down
+    optional: true
