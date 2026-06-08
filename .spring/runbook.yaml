@@ -27,20 +27,13 @@ steps:
     run: npx kill-port 3000 3001 5433 6379 || true
     optional: true
 
-  - name: Generate backend .env with stable secrets (first run only)
-    # Only fills APP_SECRET / ENCRYPTION_KEY when .env does not exist yet —
-    # rotating these on every run would invalidate any data already
-    # encrypted by the server, so we treat them as stable on disk.
-    run: |
-      cd .spring/backend
-      if [ ! -f .env ]; then
-        cp .env.example .env
-        APP_SECRET=$(openssl rand -base64 32 | tr -d '\n')
-        ENCRYPTION_KEY=$(openssl rand -base64 32 | tr -d '\n')
-        # `|` as sed delimiter avoids escaping `/` and `+` from base64.
-        sed -i '' "s|^APP_SECRET=.*|APP_SECRET=${APP_SECRET}|"           .env
-        sed -i '' "s|^ENCRYPTION_KEY=.*|ENCRYPTION_KEY=${ENCRYPTION_KEY}|" .env
-      fi
+  - name: Create backend .env (first run only)
+    # .env is gitignored, so each clone needs its own copy of the committed
+    # template. The template's APP_SECRET / ENCRYPTION_KEY are hardcoded
+    # dev-only values shared across all clones — that's what lets multiple
+    # clones drive the same compose project without mid-stream secret drift.
+    # `cp -n` won't clobber a local override if the user has customised .env.
+    run: cp -n .spring/backend/.env.example .spring/backend/.env || true
 
   - name: Start backend stack (Postgres, Redis, server, worker)
     # `up -d --wait` is idempotent: it skips containers that are already up
