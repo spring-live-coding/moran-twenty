@@ -75,9 +75,10 @@ services:
       - server-local-data:/app/packages/twenty-server/.local-storage
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://localhost:3000/healthz"]
-      interval: 5s
+      interval: 10s
       timeout: 5s
-      retries: 20
+      retries: 30
+      start_period: 300s
 
   worker:
     image: twentycrm/twenty:${TWENTY_TAG:-latest}
