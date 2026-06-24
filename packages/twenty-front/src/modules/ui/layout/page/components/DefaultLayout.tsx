@@ -1,3 +1,4 @@
+import { AiFloatingButton } from '@/ai/components/AiFloatingButton';
 import { AuthModal } from '@/auth/components/AuthModal';
 import { AppErrorBoundary } from '@/error-handler/components/AppErrorBoundary';
 import { AppFullScreenErrorFallback } from '@/error-handler/components/AppFullScreenErrorFallback';
@@ -107,6 +108,7 @@ export const DefaultLayout = () => {
               </PageDragDropProvider>
             </StyledPageContainer>
             {isMobile && !showAuthModal && <MobileNavigationBar />}
+            {!showAuthModal && <AiFloatingButton />}
           </AppErrorBoundary>
         </StyledLayout>
       </FileUploadProvider>
