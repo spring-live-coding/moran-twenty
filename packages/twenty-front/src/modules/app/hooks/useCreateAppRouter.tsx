@@ -100,6 +100,12 @@ const StandalonePageLayoutPage = lazy(() =>
   })),
 );
 
+const AiPreviewPage = lazy(() =>
+  import('~/pages/ai-preview/AiPreviewPage').then((module) => ({
+    default: module.AiPreviewPage,
+  })),
+);
+
 const NotFound = lazy(() =>
   import('~/pages/not-found/NotFound').then((module) => ({
     default: module.NotFound,
@@ -231,6 +237,14 @@ export const useCreateAppRouter = (
             element={
               <LazyRoute>
                 <StandalonePageLayoutPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path="/ai-preview"
+            element={
+              <LazyRoute>
+                <AiPreviewPage />
               </LazyRoute>
             }
           />
