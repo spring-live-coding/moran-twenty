@@ -4,10 +4,13 @@ import { styled } from '@linaria/react';
 import { ResponsiveLine } from '@nivo/line';
 
 import { currentUserState } from '@/auth/states/currentUserState';
+import { PageBody } from '@/ui/layout/page/components/PageBody';
 import { PageContainer } from '@/ui/layout/page/components/PageContainer';
+import { PageHeader } from '@/ui/layout/page/components/PageHeader';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import {
   IconArrowsSort,
+  IconHome,
   IconRefresh,
   IconTrendingDown,
   IconTrendingUp,
@@ -40,16 +43,10 @@ const StyledScrollContainer = styled.div`
   flex-direction: column;
   gap: ${themeCssVariables.spacing[5]};
   overflow-y: auto;
-  padding: ${themeCssVariables.spacing[8]};
+  padding: ${themeCssVariables.spacing[6]};
 `;
 
-const StyledPageHeader = styled.div`
-  align-items: flex-start;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const StyledHeaderLeft = styled.div`
+const StyledDashboardHeader = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing['0.5']};
@@ -67,12 +64,6 @@ const StyledSubline = styled.p`
   font-size: ${themeCssVariables.font.size.sm};
   font-weight: ${themeCssVariables.font.weight.regular};
   margin: 0;
-`;
-
-const StyledHeaderActions = styled.div`
-  align-items: center;
-  display: flex;
-  gap: ${themeCssVariables.spacing[2]};
 `;
 
 // --- highlights row ---
@@ -498,29 +489,28 @@ export const TodayPage = () => {
 
   return (
     <PageContainer>
+      <PageHeader title="Today" Icon={IconHome}>
+        <Button
+          title="Refresh data"
+          Icon={IconRefresh}
+          variant="primary"
+          size="small"
+          accent="blue"
+        />
+        <Button
+          title="Reorder"
+          Icon={IconArrowsSort}
+          variant="tertiary"
+          size="small"
+        />
+      </PageHeader>
+      <PageBody>
       <StyledScrollContainer>
         {/* Personal header */}
-        <StyledPageHeader>
-          <StyledHeaderLeft>
+        <StyledDashboardHeader>
             <StyledGreeting>{getGreeting(firstName)}</StyledGreeting>
             <StyledSubline>{getFormattedDate()}</StyledSubline>
-          </StyledHeaderLeft>
-          <StyledHeaderActions>
-            <Button
-              title="Refresh data"
-              Icon={IconRefresh}
-              variant="primary"
-              size="small"
-              accent="blue"
-            />
-            <Button
-              title="Reorder"
-              Icon={IconArrowsSort}
-              variant="tertiary"
-              size="small"
-            />
-          </StyledHeaderActions>
-        </StyledPageHeader>
+        </StyledDashboardHeader>
 
         {/* Highlights row */}
         <StyledHighlightsRow>
@@ -678,6 +668,7 @@ export const TodayPage = () => {
           </StyledRightColumn>
         </StyledColumnsRow>
       </StyledScrollContainer>
+      </PageBody>
     </PageContainer>
   );
 };
