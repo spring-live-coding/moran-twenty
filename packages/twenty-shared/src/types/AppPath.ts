@@ -18,6 +18,7 @@ export enum AppPath {
 
   // Onboarded
   Index = '/',
+  Today = '/today',
   TasksPage = '/objects/tasks',
   OpportunitiesPage = '/objects/opportunities',
 
