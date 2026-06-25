@@ -22,6 +22,9 @@ export const MainNavigationDrawer = ({ className }: { className?: string }) => {
     hasAiPermission &&
     navigationDrawerActiveTab === NAVIGATION_DRAWER_TABS.AI_CHAT_HISTORY;
 
+  const showTodayContent =
+    navigationDrawerActiveTab === NAVIGATION_DRAWER_TABS.TODAY;
+
   return (
     <NavigationDrawer
       className={className}
@@ -34,6 +37,8 @@ export const MainNavigationDrawer = ({ className }: { className?: string }) => {
       <NavigationDrawerScrollableContent>
         {showAiChatContent ? (
           <NavigationDrawerAiChatContent />
+        ) : showTodayContent ? (
+          <MainNavigationDrawerNavigationContent />
         ) : (
           <MainNavigationDrawerNavigationContent />
         )}

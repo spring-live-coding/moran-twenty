@@ -1,6 +1,7 @@
 import { styled } from '@linaria/react';
 import { t } from '@lingui/core/macro';
 import {
+  IconCalendarDue,
   IconComment,
   IconHome,
   IconMessageCirclePlus,
@@ -46,7 +47,7 @@ const StyledTabsPill = styled.div`
   gap: ${themeCssVariables.spacing[0.5]};
   height: ${themeCssVariables.spacing[7]};
   padding: 3px;
-  width: ${themeCssVariables.spacing[18]};
+  width: ${themeCssVariables.spacing[26]};
 `;
 
 const StyledTabWrapper = styled.div<{ isActive: boolean }>`
@@ -211,6 +212,32 @@ export const MainNavigationDrawerTabsRow = () => {
                 color={getTabIconColor(
                   navigationDrawerActiveTab ===
                     NAVIGATION_DRAWER_TABS.NAVIGATION_MENU,
+                )}
+              />
+            </StyledTabIcon>
+          </StyledTabWrapper>
+          <StyledTabWrapper
+            isActive={
+              navigationDrawerActiveTab === NAVIGATION_DRAWER_TABS.TODAY
+            }
+            role="tab"
+            aria-selected={
+              navigationDrawerActiveTab === NAVIGATION_DRAWER_TABS.TODAY
+            }
+            aria-label={t`Today`}
+            tabIndex={
+              navigationDrawerActiveTab === NAVIGATION_DRAWER_TABS.TODAY
+                ? 0
+                : -1
+            }
+            onClick={handleTabClick(NAVIGATION_DRAWER_TABS.TODAY)}
+            onKeyDown={handleTabKeyDown(NAVIGATION_DRAWER_TABS.TODAY)}
+          >
+            <StyledTabIcon>
+              <IconCalendarDue
+                size={theme.icon.size.md}
+                color={getTabIconColor(
+                  navigationDrawerActiveTab === NAVIGATION_DRAWER_TABS.TODAY,
                 )}
               />
             </StyledTabIcon>
