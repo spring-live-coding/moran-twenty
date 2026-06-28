@@ -1,5 +1,7 @@
 import { DEFAULT_COMPANY_RECORD_PAGE_LAYOUT } from '@/page-layout/constants/DefaultCompanyRecordPageLayout';
 import { DEFAULT_COMPANY_RECORD_PAGE_LAYOUT_ID } from '@/page-layout/constants/DefaultCompanyRecordPageLayoutId';
+import { DEFAULT_TODAY_DASHBOARD_PAGE_LAYOUT } from '@/page-layout/constants/DefaultTodayDashboardPageLayout';
+import { DEFAULT_TODAY_DASHBOARD_PAGE_LAYOUT_ID } from '@/page-layout/constants/DefaultTodayDashboardPageLayoutId';
 import { DEFAULT_MESSAGE_THREAD_RECORD_PAGE_LAYOUT } from '@/page-layout/constants/DefaultMessageThreadRecordPageLayout';
 import { DEFAULT_MESSAGE_THREAD_RECORD_PAGE_LAYOUT_ID } from '@/page-layout/constants/DefaultMessageThreadRecordPageLayoutId';
 import { DEFAULT_NOTE_RECORD_PAGE_LAYOUT } from '@/page-layout/constants/DefaultNoteRecordPageLayout';
@@ -29,6 +31,8 @@ import { FindOnePageLayoutDocument } from '~/generated-metadata/graphql';
 
 const getDefaultLayoutById = (layoutId: string): PageLayout => {
   switch (layoutId) {
+    case DEFAULT_TODAY_DASHBOARD_PAGE_LAYOUT_ID:
+      return DEFAULT_TODAY_DASHBOARD_PAGE_LAYOUT;
     case DEFAULT_COMPANY_RECORD_PAGE_LAYOUT_ID:
       return DEFAULT_COMPANY_RECORD_PAGE_LAYOUT;
     case DEFAULT_PERSON_RECORD_PAGE_LAYOUT_ID:
