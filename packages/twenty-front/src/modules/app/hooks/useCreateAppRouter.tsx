@@ -100,6 +100,12 @@ const StandalonePageLayoutPage = lazy(() =>
   })),
 );
 
+const TodayDashboardPage = lazy(() =>
+  import('~/pages/today/TodayDashboardPage').then((module) => ({
+    default: module.TodayDashboardPage,
+  })),
+);
+
 const NotFound = lazy(() =>
   import('~/pages/not-found/NotFound').then((module) => ({
     default: module.NotFound,
@@ -210,6 +216,14 @@ export const useCreateAppRouter = (
             }
           />
           <Route path={indexAppPath.getIndexAppPath()} element={<></>} />
+          <Route
+            path="/today"
+            element={
+              <LazyRoute>
+                <TodayDashboardPage />
+              </LazyRoute>
+            }
+          />
           <Route
             path={AppPath.RecordIndexPage}
             element={
