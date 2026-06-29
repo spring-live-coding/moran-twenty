@@ -42,10 +42,17 @@ const CommandMenuItemButtonRenderer = ({
     useContext(CommandMenuContext);
   const { getIcon } = useIcons();
 
-  const { iconKey, label, shortLabel } = interpolateCommandMenuItemFields(
-    item,
-    commandMenuContextApi,
-  );
+  const { iconKey, label, shortLabel: interpolatedShortLabel } =
+    interpolateCommandMenuItemFields(item, commandMenuContextApi);
+
+  const nameSingular = (
+    commandMenuContextApi.objectMetadataItem as { nameSingular?: string }
+  ).nameSingular;
+
+  const shortLabel =
+    nameSingular === 'company' && interpolatedShortLabel === 'New Company'
+      ? 'New Yossi'
+      : interpolatedShortLabel;
 
   const Icon = getIcon(iconKey, COMMAND_MENU_DEFAULT_ICON);
 
