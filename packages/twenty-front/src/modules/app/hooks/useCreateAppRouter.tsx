@@ -100,6 +100,12 @@ const StandalonePageLayoutPage = lazy(() =>
   })),
 );
 
+const DashboardPage = lazy(() =>
+  import('~/pages/dashboard/DashboardPage').then((module) => ({
+    default: module.DashboardPage,
+  })),
+);
+
 const NotFound = lazy(() =>
   import('~/pages/not-found/NotFound').then((module) => ({
     default: module.NotFound,
@@ -210,6 +216,14 @@ export const useCreateAppRouter = (
             }
           />
           <Route path={indexAppPath.getIndexAppPath()} element={<></>} />
+          <Route
+            path="/dashboard"
+            element={
+              <LazyRoute>
+                <DashboardPage />
+              </LazyRoute>
+            }
+          />
           <Route
             path={AppPath.RecordIndexPage}
             element={
