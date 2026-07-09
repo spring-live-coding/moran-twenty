@@ -11,6 +11,7 @@ import { InformationBannerWrapper } from '@/information-banner/components/Inform
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
 import { SpreadsheetImportProvider } from '@/spreadsheet-import/provider/components/SpreadsheetImportProvider';
 
+import { RecordIndexBulkActionBar } from '@/object-record/record-index/components/RecordIndexBulkActionBar';
 import { RecordIndexCalendarContainer } from '@/object-record/record-index/components/RecordIndexCalendarContainer';
 import { RecordIndexEmptyStateNotShared } from '@/object-record/record-index/components/RecordIndexEmptyStateNotShared';
 import { RecordIndexFiltersToContextStoreEffect } from '@/object-record/record-index/components/RecordIndexFiltersToContextStoreEffect';
@@ -77,7 +78,10 @@ export const RecordIndexContainer = () => {
           <>
             <RecordIndexFiltersToContextStoreEffect />
             {recordIndexViewType === ViewType.TABLE && (
-              <RecordIndexTableContainer recordTableId={recordIndexId} />
+              <>
+                <RecordIndexTableContainer recordTableId={recordIndexId} />
+                <RecordIndexBulkActionBar />
+              </>
             )}
             {recordIndexViewType === ViewType.KANBAN && (
               <StyledContainerWithPadding>
