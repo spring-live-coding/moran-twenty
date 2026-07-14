@@ -3,10 +3,11 @@ import { NavigationDrawerWorkspaceSectionSkeletonLoader } from '@/object-metadat
 
 import { isLayoutCustomizationModeEnabledState } from '@/layout-customization/states/isLayoutCustomizationModeEnabledState';
 import { NavigationDrawerOtherSection } from '@/navigation/components/NavigationDrawerOtherSection';
+import { NavigationDrawerItem } from '@/ui/navigation/navigation-drawer/components/NavigationDrawerItem';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { styled } from '@linaria/react';
 import { lazy, Suspense } from 'react';
-
+import { IconCalendarEvent } from 'twenty-ui/display';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 const FavoritesSectionDispatcher = lazy(() =>
@@ -38,6 +39,12 @@ export const MainNavigationDrawerScrollableItems = () => {
 
   return (
     <StyledScrollableItemsContainer>
+      <NavigationDrawerItem
+        label="Today"
+        Icon={IconCalendarEvent}
+        iconColor="blue"
+        to="/today"
+      />
       <NavigationDrawerOpenedSection />
       <Suspense fallback={<NavigationDrawerWorkspaceSectionSkeletonLoader />}>
         <FavoritesSectionDispatcher />
