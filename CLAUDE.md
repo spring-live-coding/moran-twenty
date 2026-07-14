@@ -217,6 +217,36 @@ This handles everything: starts Postgres + Redis (auto-detects local services vs
 
 **Note:** CI workflows (GitHub Actions) manage services via Actions service containers and run setup steps individually — they don't use this script.
 
+## Knowledge Graph (graphify)
+
+A pre-built knowledge graph of `packages/twenty-front` is available in `graphify-out/`. It contains 26,757 nodes and 89,890 edges extracted from the frontend codebase via AST analysis.
+
+### Files
+- `graphify-out/graph.json` — raw graph data (nodes, edges, communities)
+- `graphify-out/graph.html` — interactive visualization (open in browser)
+- `graphify-out/GRAPH_REPORT.md` — audit report with god nodes, surprising connections, community breakdown
+
+### Usage with `/graphify`
+
+If the `/graphify` skill is available, you can query the existing graph without re-extraction:
+
+```bash
+/graphify query "How does the record table connect to the filter system?"
+/graphify query "What depends on useAtomStateValue?"
+/graphify path "RecordTable" "AdvancedFilter"
+/graphify explain "EnrichedObjectMetadataItem"
+```
+
+To update the graph after code changes:
+```bash
+/graphify packages/twenty-front --update
+```
+
+### Key Insights
+- **God nodes**: `useAtomStateValue` (975 edges), `useAtomComponentStateValue` (896 edges), `EnrichedObjectMetadataItem` (369 edges) — these are the core abstractions bridging almost every module
+- **691 communities** detected, covering: GraphQL metadata types, UI filters, AI chat & streaming, auth flow, record tables, settings pages, workflow system, calendar, and more
+- **Token reduction**: 3.2x fewer tokens per query vs reading raw source files
+
 ## Important Files
 - `nx.json` - Nx workspace configuration with task definitions
 - `tsconfig.base.json` - Base TypeScript configuration
