@@ -19,12 +19,14 @@ prerequisites:
 
 steps:
   - name: Free app ports if in use
-    # 3000 server, 3001 frontend, 5433 postgres host mapping, 6379 redis host mapping.
-    # Clears stale host processes (e.g. a yarn-started server from a previous
-    # runbook run) before compose tries to bind. Note: if the port is held by
-    # ANOTHER docker stack, `kill-port` only knocks out the docker proxy and the
-    # daemon will re-bind it — stop the conflicting stack manually in that case.
-    run: npx kill-port 3000 3001 5433 6379 || true
+    # Only 3001 (twenty-front) runs on the host; 3000/5433/6379 are published by
+    # the Docker backend stack and managed idempotently by `docker compose up`.
+    # IMPORTANT: never kill-port the Docker-published ports. On macOS Docker
+    # Desktop those ports are served by the single `com.docker.backend` process,
+    # so `kill-port 5433/6379/3000` SIGKILLs the whole daemon + VM (there is no
+    # throwaway per-port docker-proxy to re-bind, unlike on Linux). That is what
+    # made `docker compose up` fail with "Cannot connect to the Docker daemon".
+    run: npx kill-port 3001 || true
     optional: true
 
   - name: Create backend .env (first run only)
