@@ -52,7 +52,7 @@ services:
       retries: 10
 
   server:
-    image: twentycrm/twenty:${TWENTY_TAG:-latest}
+    image: twentycrm/twenty:${TWENTY_TAG:-v2.10.0}
     restart: unless-stopped
     depends_on:
       db:
@@ -81,7 +81,7 @@ services:
       start_period: 300s
 
   worker:
-    image: twentycrm/twenty:${TWENTY_TAG:-latest}
+    image: twentycrm/twenty:${TWENTY_TAG:-v2.10.0}
     restart: unless-stopped
     depends_on:
       server:
