@@ -1,11 +1,12 @@
 import { styled } from '@linaria/react';
 import { useContext } from 'react';
 
+import { SettingsAccountsCalendarCardIcon } from '@/settings/accounts/components/SettingsAccountsCalendarCardIcon';
 import { SettingsCard } from '@/settings/components/SettingsCard';
 import { useLingui } from '@lingui/react/macro';
 import { SettingsPath } from 'twenty-shared/types';
 import { getSettingsPath } from 'twenty-shared/utils';
-import { H2Title, IconCalendarEvent, IconMailCog } from 'twenty-ui/display';
+import { H2Title, IconMailCog } from 'twenty-ui/display';
 import { Section } from 'twenty-ui/layout';
 import { UndecoratedLink } from 'twenty-ui/navigation';
 import {
@@ -57,10 +58,7 @@ export const SettingsAccountsSettingsSection = () => {
           <UndecoratedLink to={getSettingsPath(SettingsPath.AccountsCalendars)}>
             <SettingsCard
               Icon={
-                <IconCalendarEvent
-                  size={theme.icon.size.lg}
-                  stroke={theme.icon.stroke.sm}
-                />
+                <SettingsAccountsCalendarCardIcon size={theme.icon.size.lg} />
               }
               title={t`Calendar`}
               description={t`Configure and customize your calendar preferences.`}

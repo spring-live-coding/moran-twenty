@@ -1,4 +1,5 @@
 import { SettingsAccountsBlocklistSection } from '@/settings/accounts/components/SettingsAccountsBlocklistSection';
+import { SettingsAccountsCalendarCardIcon } from '@/settings/accounts/components/SettingsAccountsCalendarCardIcon';
 import { SettingsAccountsConnectedAccountsListCard } from '@/settings/accounts/components/SettingsAccountsConnectedAccountsListCard';
 import { SettingsAccountsSettingsSection } from '@/settings/accounts/components/SettingsAccountsSettingsSection';
 import { useMyConnectedAccounts } from '@/settings/accounts/hooks/useMyConnectedAccounts';
@@ -36,6 +37,7 @@ export const SettingsAccounts = () => {
               <H2Title
                 title={t`Connected accounts`}
                 description={t`Manage your internet accounts.`}
+                adornment={<SettingsAccountsCalendarCardIcon size={72} />}
               />
               <SettingsAccountsConnectedAccountsListCard
                 accounts={allAccounts}
