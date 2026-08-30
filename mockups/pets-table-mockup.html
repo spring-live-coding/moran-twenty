@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pets table — mockup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Values resolved from packages/twenty-ui/src/theme/constants (light theme).
+         Root is 13px in twenty-front/src/index.css, so all sizes below are literal px. */
+      :root {
+        --background-primary: #ffffff;
+        --background-secondary: #fcfcfc;
+        --background-tertiary: #f1f1f1;
+        --background-transparent-light: rgba(0, 0, 0, 0.039);
+        --background-transparent-medium: rgba(0, 0, 0, 0.078);
+        --border-color-light: #f1f1f1;
+        --border-color-medium: #ebebeb;
+        --font-color-primary: #333333;
+        --font-color-secondary: #666666;
+        --font-color-tertiary: #999999;
+        --font-color-light: #b3b3b3;
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --row-height: 32px;
+        --spacing-1: 4px;
+        --spacing-2: 8px;
+        --spacing-3: 12px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        font-size: 13px;
+      }
+
+      body {
+        margin: 0;
+        padding: 24px;
+        font-family: Inter, sans-serif;
+        font-size: 13px;
+        font-weight: 400;
+        color: var(--font-color-primary);
+        background: var(--background-tertiary);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .panel {
+        background: var(--background-primary);
+        border: 1px solid var(--border-color-medium);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+      }
+
+      /* ---- View bar: "All Pets · 5" + Filter / Sort / Options ---- */
+      .view-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 40px;
+        padding: 0 var(--spacing-3);
+      }
+
+      .view-name {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-2);
+      }
+
+      .view-name strong {
+        font-weight: 500;
+      }
+
+      .view-count {
+        color: var(--font-color-tertiary);
+      }
+
+      .view-actions {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-3);
+        color: var(--font-color-secondary);
+      }
+
+      .view-actions span {
+        padding: var(--spacing-1) var(--spacing-2);
+        border-radius: var(--radius-sm);
+        cursor: default;
+      }
+
+      .view-actions span:hover {
+        background: var(--background-transparent-light);
+      }
+
+      /* ---- Table ---- */
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
+
+      .table th,
+      .table td {
+        height: var(--row-height);
+        padding: 0;
+        border-bottom: 1px solid var(--border-color-light);
+        border-right: 1px solid var(--border-color-light);
+        text-align: left;
+        font-weight: 400;
+        vertical-align: middle;
+        overflow: hidden;
+      }
+
+      .table th {
+        font-weight: 500;
+        color: var(--font-color-tertiary);
+        padding: 0 var(--spacing-2);
+      }
+
+      .table th:hover {
+        background: var(--background-secondary);
+      }
+
+      .table td {
+        padding-left: var(--spacing-2);
+        color: var(--font-color-primary);
+      }
+
+      .table tr td:last-child,
+      .table tr th:last-child {
+        border-right: none;
+      }
+
+      .table tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .table tbody tr:hover td {
+        background: var(--background-secondary);
+      }
+
+      .col-check {
+        width: 40px;
+        padding-left: var(--spacing-3) !important;
+      }
+
+      .th-inner {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-1);
+      }
+
+      .th-inner svg {
+        flex-shrink: 0;
+      }
+
+      .abc-icon {
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: -0.2px;
+        line-height: 1;
+      }
+
+      /* ---- Checkbox ---- */
+      .checkbox {
+        width: 14px;
+        height: 14px;
+        border: 1px solid var(--font-color-light);
+        border-radius: var(--radius-sm);
+        background: var(--background-primary);
+      }
+
+      /* ---- Record chip (avatar + name) ---- */
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--spacing-1);
+        max-width: 100%;
+        padding: var(--spacing-1);
+        border-radius: var(--radius-sm);
+        overflow: hidden;
+      }
+
+      .chip:hover {
+        background: var(--background-transparent-medium);
+      }
+
+      .avatar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        font-size: 10px;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      .chip-label {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      /* ---- Footer ---- */
+      .footer {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-1);
+        height: var(--row-height);
+        padding-left: var(--spacing-3);
+        color: var(--font-color-secondary);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="panel">
+      <div class="view-bar">
+        <div class="view-name">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round">
+            <path d="M9 6h11M9 12h11M9 18h11M5 6h.01M5 12h.01M5 18h.01" />
+          </svg>
+          <strong>All Pets</strong>
+          <span class="view-count">· 5</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round">
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </div>
+        <div class="view-actions">
+          <span>Filter</span>
+          <span>Sort</span>
+          <span>Options</span>
+        </div>
+      </div>
+
+      <table class="table">
+        <colgroup>
+          <col style="width: 40px" />
+          <col style="width: 210px" />
+          <col style="width: 180px" />
+          <col style="width: 180px" />
+          <col style="width: 180px" />
+          <col />
+        </colgroup>
+        <thead>
+          <tr>
+            <th class="col-check"><div class="checkbox"></div></th>
+            <th>
+              <div class="th-inner">
+                <span class="abc-icon">Abc</span>
+                Name
+              </div>
+            </th>
+            <th>
+              <div class="th-inner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round">
+                  <rect x="4" y="5" width="16" height="16" rx="2" />
+                  <path d="M16 3v4M8 3v4M4 11h16M10 16h4M12 14v4" />
+                </svg>
+                Creation date
+              </div>
+            </th>
+            <th>
+              <div class="th-inner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round">
+                  <path d="M20 11A8.1 8.1 0 0 0 4.5 9M4 5v4h4" />
+                  <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+                </svg>
+                Created by
+              </div>
+            </th>
+            <th>
+              <div class="th-inner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round">
+                  <path d="M11.5 21H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5" />
+                  <path d="M16 3v4M8 3v4M4 11h16" />
+                  <circle cx="18" cy="18" r="4" />
+                  <path d="M18 16.5V18l1 1" />
+                </svg>
+                Last update
+              </div>
+            </th>
+            <th>
+              <div class="th-inner">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <circle cx="12" cy="10" r="3" />
+                  <path d="M6.2 18.2a6 6 0 0 1 11.6 0" />
+                </svg>
+                Account Owner
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-check"><div class="checkbox"></div></td>
+            <td>
+              <span class="chip">
+                <span class="avatar" style="background: #ccf3ea; color: #0d3d38">T</span>
+                <span class="chip-label">Toby</span>
+              </span>
+            </td>
+            <td>Jun 8, 2026 12:10 PM</td>
+            <td></td>
+            <td>Jun 8, 2026 12:10 PM</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="col-check"><div class="checkbox"></div></td>
+            <td>
+              <span class="chip">
+                <span class="avatar" style="background: #caf1f6; color: #0d3c48">L</span>
+                <span class="chip-label">Luna</span>
+              </span>
+            </td>
+            <td>Jun 9, 2026 1:22 PM</td>
+            <td></td>
+            <td>Jun 9, 2026 1:22 PM</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="col-check"><div class="checkbox"></div></td>
+            <td>
+              <span class="chip">
+                <span class="avatar" style="background: #d1f0fa; color: #1d3e56">M</span>
+                <span class="chip-label">Max</span>
+              </span>
+            </td>
+            <td>Jun 10, 2026 5:05 PM</td>
+            <td></td>
+            <td>Jun 10, 2026 5:05 PM</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="col-check"><div class="checkbox"></div></td>
+            <td>
+              <span class="chip">
+                <span class="avatar" style="background: #e1e9ff; color: #1f2d5c">B</span>
+                <span class="chip-label">Bella</span>
+              </span>
+            </td>
+            <td>Jun 11, 2026 11:47 AM</td>
+            <td></td>
+            <td>Jun 11, 2026 11:47 AM</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="col-check"><div class="checkbox"></div></td>
+            <td>
+              <span class="chip">
+                <span class="avatar" style="background: #e6e7ff; color: #272962">C</span>
+                <span class="chip-label">Charlie</span>
+              </span>
+            </td>
+            <td>Jun 12, 2026 7:30 PM</td>
+            <td></td>
+            <td>Jun 12, 2026 7:30 PM</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="footer">
+        Calculate
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="2" stroke-linecap="round">
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </div>
+    </div>
+  </body>
+</html>
