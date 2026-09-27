@@ -18,4 +18,6 @@ const getDefaultUrl = () => {
 };
 
 export const REACT_APP_SERVER_BASE_URL =
-  window._env_?.REACT_APP_SERVER_BASE_URL || getDefaultUrl();
+  import.meta.env.DEV && import.meta.env.REACT_APP_SPRING_BACKENDLESS === 'true'
+    ? `${window.location.origin}/__spring-preview-api`
+    : window._env_?.REACT_APP_SERVER_BASE_URL || getDefaultUrl();

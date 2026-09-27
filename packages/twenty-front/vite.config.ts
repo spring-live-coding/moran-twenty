@@ -3,6 +3,7 @@ import { isNonEmptyString } from '@sniptt/guards';
 import react from '@vitejs/plugin-react-swc';
 import wyw from '@wyw-in-js/vite';
 import fs from 'fs';
+import { execFileSync } from 'node:child_process';
 import path from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
 import {
@@ -14,9 +15,20 @@ import {
 import svgr from 'vite-plugin-svgr';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
-import { createWywProfilingPlugin } from 'twenty-shared/vite';
+import { createWywProfilingPlugin } from '../twenty-shared/src/vite/createWywProfilingPlugin';
 
 export default defineConfig(({ mode }) => {
+  if (process.env.REACT_APP_SPRING_BACKENDLESS === 'true') {
+    execFileSync(
+      process.execPath,
+      [
+        path.resolve(__dirname, 'scripts/start-backendless.mjs'),
+        '--prepare-only',
+      ],
+      { stdio: 'inherit' },
+    );
+  }
+
   const env = loadEnv(mode, __dirname, '');
 
   const {
