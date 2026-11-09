@@ -4,7 +4,7 @@ import { type DraggableProvidedDragHandleProps } from '@hello-pangea/dnd';
 import { cx } from '@linaria/core';
 import { styled } from '@linaria/react';
 import { useContext, type ReactNode } from 'react';
-import { ThemeContext } from 'twenty-ui/theme-constants';
+import { ThemeContext, themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledRecordTableTd = styled.div<{
   backgroundColor: string;
@@ -54,7 +54,7 @@ export const RecordTableCellFirstRowFirstColumn = ({
 
   const tdBackgroundColor = isSelected
     ? theme.accent.quaternary
-    : theme.background.primary;
+    : themeCssVariables.background.primary;
 
   const borderColor = theme.border.color.light;
 

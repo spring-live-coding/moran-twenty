@@ -3,7 +3,9 @@ import React from 'react';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledPanel = styled.div`
-  background: ${themeCssVariables.background.primary};
+  --t-background-primary: var(--t-background-tertiary);
+
+  background: ${themeCssVariables.background.tertiary};
   border: 1px solid ${themeCssVariables.border.color.medium};
   border-radius: ${themeCssVariables.border.radius.md};
   display: flex;
