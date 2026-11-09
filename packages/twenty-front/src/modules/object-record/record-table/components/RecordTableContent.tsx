@@ -24,8 +24,12 @@ import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/use
 import { styled } from '@linaria/react';
 import { useStore } from 'jotai';
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { themeCssVariables } from 'twenty-ui/theme-constants';
 
+// Scoped override so every table cell that uses the primary background turns orange
 const StyledTableContainer = styled.div`
+  --t-background-primary: ${themeCssVariables.color.orange};
+  background-color: ${themeCssVariables.color.orange};
   display: flex;
   flex-direction: column;
   height: 100%;
