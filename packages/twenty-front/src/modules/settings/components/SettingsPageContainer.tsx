@@ -10,6 +10,11 @@ import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 const SETTINGS_CONTENT_MAX_WIDTH = 760;
 
+const StyledBlueScrollWrapper = styled(ScrollWrapper)`
+  --t-background-primary: ${themeCssVariables.color.blue};
+  background-color: ${themeCssVariables.color.blue};
+`;
+
 const StyledSettingsPageContainer = styled.div<{
   width?: number;
   isMobile?: boolean;
@@ -59,10 +64,10 @@ export const SettingsPageContainer = ({
   useScrollRestoration(componentInstanceId);
 
   return (
-    <ScrollWrapper componentInstanceId={componentInstanceId}>
+    <StyledBlueScrollWrapper componentInstanceId={componentInstanceId}>
       <StyledSettingsPageContainer isMobile={isMobile}>
         {children}
       </StyledSettingsPageContainer>
-    </ScrollWrapper>
+    </StyledBlueScrollWrapper>
   );
 };
