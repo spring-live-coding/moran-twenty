@@ -17604,7 +17604,7 @@ export const mockedStandardObjectMetadataQueryResult: ObjectMetadataItemsQuery =
               "universalIdentifier": "20202020-95b8-4e10-9881-edb5d4765f9d",
               "type": "RELATION",
               "name": "accountOwner",
-              "label": "Account Owner",
+              "label": "Relationship Lead",
               "description": "Your team member responsible for managing the company account",
               "icon": "IconUserCircle",
               "isCustom": false,
