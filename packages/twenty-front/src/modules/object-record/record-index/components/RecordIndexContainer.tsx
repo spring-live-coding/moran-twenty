@@ -2,6 +2,7 @@ import { styled } from '@linaria/react';
 
 import { ObjectOptionsDropdown } from '@/object-record/object-options-dropdown/components/ObjectOptionsDropdown';
 import { RecordBoardContainer } from '@/object-record/record-board/components/RecordBoardContainer';
+import { RecordIndexCompanyCardGridContainer } from '@/object-record/record-index/components/RecordIndexCompanyCardGridContainer';
 import { RecordIndexTableContainer } from '@/object-record/record-index/components/RecordIndexTableContainer';
 import { RecordIndexViewBarEffect } from '@/object-record/record-index/components/RecordIndexViewBarEffect';
 import { recordIndexViewTypeState } from '@/object-record/record-index/states/recordIndexViewTypeState';
@@ -17,6 +18,7 @@ import { RecordIndexFiltersToContextStoreEffect } from '@/object-record/record-i
 import { useHasCurrentViewNonReadableFields } from '@/object-record/record-index/hooks/useHasCurrentViewNonReadableFields';
 import { ViewBar } from '@/views/components/ViewBar';
 import { ViewType } from '@/views/types/ViewType';
+import { CoreObjectNameSingular } from 'twenty-shared/types';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 const StyledContainer = styled.div`
@@ -76,9 +78,12 @@ export const RecordIndexContainer = () => {
         ) : (
           <>
             <RecordIndexFiltersToContextStoreEffect />
-            {recordIndexViewType === ViewType.TABLE && (
-              <RecordIndexTableContainer recordTableId={recordIndexId} />
-            )}
+            {recordIndexViewType === ViewType.TABLE &&
+              (objectNameSingular === CoreObjectNameSingular.Company ? (
+                <RecordIndexCompanyCardGridContainer />
+              ) : (
+                <RecordIndexTableContainer recordTableId={recordIndexId} />
+              ))}
             {recordIndexViewType === ViewType.KANBAN && (
               <StyledContainerWithPadding>
                 <RecordBoardContainer
