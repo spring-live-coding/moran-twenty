@@ -10,7 +10,7 @@ import { SettingsLogs } from '@/settings/event-logs/components/SettingsLogs';
 import { DeleteWorkspace } from '@/settings/profile/components/DeleteWorkspace';
 import { useHasPermissionFlag } from '@/settings/roles/hooks/useHasPermissionFlag';
 import { SettingsSecuritySettings } from '@/settings/security/components/SettingsSecuritySettings';
-import { NameField } from '@/settings/workspace/components/NameField';
+import { SettingsWorkspaceDetailsForm } from '@/settings/workspace/components/SettingsWorkspaceDetailsForm';
 import { WorkspaceLogoUploader } from '@/settings/workspace/components/WorkspaceLogoUploader';
 import { useAtomStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomStateValue';
 import { H2Title, IconHistory, IconKey, IconSettings } from 'twenty-ui/display';
@@ -61,8 +61,11 @@ export const SettingsGeneral = () => {
           <WorkspaceLogoUploader />
         </Section>
         <Section>
-          <H2Title title={t`Name`} description={t`Name of your workspace`} />
-          <NameField />
+          <H2Title
+            title={t`Workspace details`}
+            description={t`Update how your workspace appears to teammates and in notification emails.`}
+          />
+          <SettingsWorkspaceDetailsForm />
         </Section>
         {isMultiWorkspaceEnabled && (
           <Section>
