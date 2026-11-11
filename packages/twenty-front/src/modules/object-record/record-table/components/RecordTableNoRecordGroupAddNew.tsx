@@ -79,11 +79,13 @@ export const RecordTableNoRecordGroupAddNew = () => {
     return null;
   }
 
+  const objectLabelSingular = objectMetadataItem.labelSingular.toLowerCase();
+
   return (
     <RecordTableActionRow
       onClick={handleButtonClick}
       LeftIcon={IconPlus}
-      text={t`Add New`}
+      text={t`Add ${objectLabelSingular}`}
     />
   );
 };
