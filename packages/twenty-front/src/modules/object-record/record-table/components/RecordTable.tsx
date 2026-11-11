@@ -5,6 +5,7 @@ import { useObjectPermissionsForObject } from '@/object-record/hooks/useObjectPe
 import { hasRecordGroupsComponentSelector } from '@/object-record/record-group/states/selectors/hasRecordGroupsComponentSelector';
 import { recordIndexHasRecordsComponentSelector } from '@/object-record/record-index/states/selectors/recordIndexHasRecordsComponentSelector';
 import { RecordTableBodyEffectsWrapper } from '@/object-record/record-table/components/RecordTableBodyEffectsWrapper';
+import { RecordTableCardGrid } from '@/object-record/record-table/components/RecordTableCardGrid';
 import { RecordTableContent } from '@/object-record/record-table/components/RecordTableContent';
 import { RecordTableEmpty } from '@/object-record/record-table/components/RecordTableEmpty';
 import { RecordTableScrollToFocusedCellEffect } from '@/object-record/record-table/components/RecordTableScrollToFocusedCellEffect';
@@ -18,6 +19,7 @@ import { useClickOutsideListener } from '@/ui/utilities/pointer-event/hooks/useC
 import { useAtomComponentSelectorValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentSelectorValue';
 import { useAtomComponentStateValue } from '@/ui/utilities/state/jotai/hooks/useAtomComponentStateValue';
 import isEmpty from 'lodash.isempty';
+import { CoreObjectNameSingular } from 'twenty-shared/types';
 
 export const RecordTable = () => {
   const {
@@ -92,6 +94,8 @@ export const RecordTable = () => {
         !hasRecordGroups &&
         !isRecordTableEmptyStateHidden ? (
         <RecordTableEmpty tableBodyRef={tableBodyRef} />
+      ) : objectNameSingular === CoreObjectNameSingular.Company ? (
+        <RecordTableCardGrid />
       ) : (
         <RecordTableContent
           tableBodyRef={tableBodyRef}
