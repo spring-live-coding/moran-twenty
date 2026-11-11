@@ -172,7 +172,7 @@ export const ObjectSortDropdownButton = () => {
       onOpen={handleDropdownOpen}
       clickableComponent={
         <StyledHeaderDropdownButton isUnfolded={isDropdownOpen}>
-          <Trans>Sort</Trans>
+          <Trans>Order by</Trans>
         </StyledHeaderDropdownButton>
       }
       dropdownComponents={

@@ -12,7 +12,7 @@ export const ViewBarFilterButton = () => {
 
   return (
     <StyledHeaderDropdownButton isUnfolded={isDropdownOpen}>
-      <Trans>Filter</Trans>
+      <Trans>Refine</Trans>
     </StyledHeaderDropdownButton>
   );
 };
