@@ -54,7 +54,13 @@ const StyledViewName = styled.span`
   }
 `;
 
-export const ViewPickerDropdown = () => {
+type ViewPickerDropdownProps = {
+  viewNameOverride?: string;
+};
+
+export const ViewPickerDropdown = ({
+  viewNameOverride,
+}: ViewPickerDropdownProps) => {
   const { theme } = useContext(ThemeContext);
   const { currentView } = useGetCurrentViewOnly();
 
@@ -95,7 +101,8 @@ export const ViewPickerDropdown = () => {
             )}
           </StyledIconContainer>
           <StyledViewName>
-            <OverflowingTextWithTooltip text={currentView?.name ?? t`All`} />
+            <OverflowingTextWithTooltip text={viewNameOverride ?? currentView?.name ?? t`All`}
+            />
           </StyledViewName>
           <StyledDropdownLabelAdornments>
             {isDefined(totalCount) && <>· {totalCount} </>}

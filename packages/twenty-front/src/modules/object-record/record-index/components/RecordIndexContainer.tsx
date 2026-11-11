@@ -1,4 +1,5 @@
 import { styled } from '@linaria/react';
+import { t } from '@lingui/core/macro';
 
 import { ObjectOptionsDropdown } from '@/object-record/object-options-dropdown/components/ObjectOptionsDropdown';
 import { RecordBoardContainer } from '@/object-record/record-board/components/RecordBoardContainer';
@@ -26,6 +27,13 @@ const StyledContainer = styled.div`
   overflow: hidden;
 
   width: 100%;
+`;
+
+const StyledHelperText = styled.div`
+  color: ${themeCssVariables.font.color.tertiary};
+  font-size: ${themeCssVariables.font.size.sm};
+  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[3]}
+    ${themeCssVariables.spacing[2]};
 `;
 
 const StyledContainerWithPadding = styled.div`
@@ -69,6 +77,9 @@ export const RecordIndexContainer = () => {
             viewBarId={recordIndexId}
           />
         </SpreadsheetImportProvider>
+        {objectNameSingular === 'company' && (
+          <StyledHelperText>{t`Companies we work with most closely.`}</StyledHelperText>
+        )}
         {hasCurrentViewNonReadableFields ? (
           <RecordIndexEmptyStateNotShared
             nonReadableViewFieldInfo={nonReadableViewFieldInfo}

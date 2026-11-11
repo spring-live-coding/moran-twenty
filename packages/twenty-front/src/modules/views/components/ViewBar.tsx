@@ -1,3 +1,4 @@
+import { t } from '@lingui/core/macro';
 import { type ReactNode } from 'react';
 
 import { ObjectSortDropdownButton } from '@/object-record/object-sort-dropdown/components/ObjectSortDropdownButton';
@@ -6,6 +7,7 @@ import { TopBar } from '@/ui/layout/top-bar/components/TopBar';
 import { QueryParamsFiltersEffect } from '@/views/components/QueryParamsFiltersEffect';
 import { QueryParamsSortsEffect } from '@/views/components/QueryParamsSortsEffect';
 import { ViewBarPageTitle } from '@/views/components/ViewBarPageTitle';
+import { useGetCurrentViewOnly } from '@/views/hooks/useGetCurrentViewOnly';
 import { ViewPickerDropdown } from '@/views/view-picker/components/ViewPickerDropdown';
 
 import { ObjectFilterDropdownComponentInstanceContext } from '@/object-record/object-filter-dropdown/states/contexts/ObjectFilterDropdownComponentInstanceContext';
@@ -35,7 +37,14 @@ export const ViewBar = ({
   optionsDropdownButton,
   isReadOnly = false,
 }: ViewBarProps) => {
-  const { objectNamePlural } = useRecordIndexContextOrThrow();
+  const { objectNamePlural, objectNameSingular } =
+    useRecordIndexContextOrThrow();
+  const { currentView } = useGetCurrentViewOnly();
+
+  const viewNameOverride =
+    objectNameSingular === 'company' && currentView?.name === 'All Companies'
+      ? t`Key Partners`
+      : undefined;
 
   if (!objectNamePlural) {
     return;
@@ -43,7 +52,10 @@ export const ViewBar = ({
 
   if (isReadOnly) {
     return (
-      <TopBar className={className} leftComponent={<ViewPickerDropdown />} />
+      <TopBar
+        className={className}
+        leftComponent={<ViewPickerDropdown viewNameOverride={viewNameOverride} />}
+      />
     );
   }
 
@@ -62,7 +74,7 @@ export const ViewBar = ({
       <ViewBarPageTitle />
       <TopBar
         className={className}
-        leftComponent={<ViewPickerDropdown />}
+        leftComponent={<ViewPickerDropdown viewNameOverride={viewNameOverride} />}
         rightComponent={
           <>
             <ObjectFilterDropdownComponentInstanceContext.Provider
