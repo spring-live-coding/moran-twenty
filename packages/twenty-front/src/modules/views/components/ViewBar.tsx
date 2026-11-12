@@ -1,4 +1,7 @@
+import { styled } from '@linaria/react';
+import { useLingui } from '@lingui/react/macro';
 import { type ReactNode } from 'react';
+import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 import { ObjectSortDropdownButton } from '@/object-record/object-sort-dropdown/components/ObjectSortDropdownButton';
 import { useRecordIndexContextOrThrow } from '@/object-record/record-index/contexts/RecordIndexContext';
@@ -22,6 +25,13 @@ import { ViewBarFilterDropdownIds } from '@/views/constants/ViewBarFilterDropdow
 import { UpdateViewButtonGroup } from './UpdateViewButtonGroup';
 import { ViewBarDetails } from './ViewBarDetails';
 
+const StyledHelperText = styled.div`
+  color: ${themeCssVariables.font.color.tertiary};
+  font-size: ${themeCssVariables.font.size.sm};
+  margin-left: ${themeCssVariables.spacing[3]};
+  padding: ${themeCssVariables.spacing[1]} ${themeCssVariables.spacing[2]};
+`;
+
 type ViewBarProps = {
   viewBarId: string;
   className?: string;
@@ -35,7 +45,10 @@ export const ViewBar = ({
   optionsDropdownButton,
   isReadOnly = false,
 }: ViewBarProps) => {
-  const { objectNamePlural } = useRecordIndexContextOrThrow();
+  const { objectNamePlural, objectMetadataItem } =
+    useRecordIndexContextOrThrow();
+  const { t } = useLingui();
+  const objectLabelPlural = objectMetadataItem.labelPlural.toLowerCase();
 
   if (!objectNamePlural) {
     return;
@@ -83,6 +96,9 @@ export const ViewBar = ({
           />
         }
       />
+      <StyledHelperText>
+        {t`Filter, sort, or change view options to narrow down your ${objectLabelPlural}.`}
+      </StyledHelperText>
     </ObjectSortDropdownComponentInstanceContext.Provider>
   );
 };

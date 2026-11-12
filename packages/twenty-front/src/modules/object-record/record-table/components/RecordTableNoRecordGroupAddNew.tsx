@@ -18,6 +18,8 @@ import { IconPlus } from 'twenty-ui/display';
 export const RecordTableNoRecordGroupAddNew = () => {
   const { objectMetadataItem } = useRecordTableContextOrThrow();
 
+  const objectLabelSingular = objectMetadataItem.labelSingular.toLowerCase();
+
   const isRecordTableCellsNonEditable = useAtomComponentStateValue(
     isRecordTableCellsNonEditableComponentState,
   );
@@ -83,7 +85,7 @@ export const RecordTableNoRecordGroupAddNew = () => {
     <RecordTableActionRow
       onClick={handleButtonClick}
       LeftIcon={IconPlus}
-      text={t`Add New`}
+      text={t`Add ${objectLabelSingular}`}
     />
   );
 };
