@@ -68,7 +68,7 @@ export const DeleteAccount = () => {
   return (
     <>
       <H2Title
-        title={t`Danger zone`}
+        title={t`Delete your account`}
         description={
           userHasMultipleWorkspaces
             ? t`Delete account and all the associated data or leave workspace`
