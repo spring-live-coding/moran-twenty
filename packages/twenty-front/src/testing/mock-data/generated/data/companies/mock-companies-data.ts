@@ -277,7 +277,7 @@ export const mockedCompanyRecords: ObjectRecord[] =
       "primaryLinkLabel": "",
       "secondaryLinks": []
     },
-    "name": "Odessa",
+    "name": "Odessa Labs",
     "noteTargets": {
       "__typename": "NoteTargetConnection",
       "edges": [

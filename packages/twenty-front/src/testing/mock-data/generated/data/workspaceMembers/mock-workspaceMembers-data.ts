@@ -15431,7 +15431,7 @@ export const mockedWorkspaceMemberRecords: ObjectRecord[] =
               "secondaryLinks": []
             },
             "id": "20202020-a018-492d-89de-f9cd4ee80437",
-            "name": "Odessa"
+            "name": "Odessa Labs"
           }
         },
         {
