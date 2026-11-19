@@ -13,7 +13,6 @@ const StyledHeaderCell = styled.div<{
     shouldDisplayBorderBottom
       ? `1px solid ${themeCssVariables.border.color.light}`
       : 'none'};
-  border-right: 1px solid ${themeCssVariables.border.color.light};
 
   color: ${themeCssVariables.font.color.tertiary};
 

@@ -32,7 +32,7 @@ export const RecordTableCellStyleWrapper = ({
   children,
   isSelected,
   isDragging,
-  hasRightBorder = true,
+  hasRightBorder = false,
   hasBottomBorder = true,
   widthClassName,
   ...dragHandleProps

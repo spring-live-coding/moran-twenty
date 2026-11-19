@@ -37,7 +37,7 @@ export const RecordTableCellFirstRowFirstColumn = ({
   children,
   isSelected,
   isDragging,
-  hasRightBorder = true,
+  hasRightBorder = false,
   hasBottomBorder = true,
   ...dragHandleProps
 }: {
