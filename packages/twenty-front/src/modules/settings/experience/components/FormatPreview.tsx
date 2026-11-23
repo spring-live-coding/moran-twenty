@@ -3,6 +3,8 @@ import { useLingui } from '@lingui/react/macro';
 import { format } from 'date-fns';
 import { formatInTimeZone } from 'date-fns-tz';
 import { CalendarStartDay } from 'twenty-shared/constants';
+import { Tag } from 'twenty-ui/components';
+import { Card, CardContent, CardHeader } from 'twenty-ui/layout';
 import { themeCssVariables } from 'twenty-ui/theme-constants';
 
 import { DateFormat } from '@/localization/constants/DateFormat';
@@ -23,37 +25,14 @@ const REFERENCE_SUNDAY_DAY_OF_MONTH = 1;
 
 const StyledPreview = styled.div`
   align-self: start;
-  background: ${themeCssVariables.background.secondary};
-  border: 1px solid ${themeCssVariables.border.color.medium};
-  border-radius: ${themeCssVariables.border.radius.md};
-  overflow: hidden;
   position: sticky;
   top: ${themeCssVariables.spacing[8]};
 `;
 
-const StyledHeader = styled.div`
+const StyledHeaderRow = styled.div`
   align-items: center;
-  border-bottom: 1px solid ${themeCssVariables.border.color.medium};
-  color: ${themeCssVariables.font.color.tertiary};
   display: flex;
-  font-size: ${themeCssVariables.font.size.xs};
-  font-weight: ${themeCssVariables.font.weight.medium};
   justify-content: space-between;
-  padding: ${themeCssVariables.spacing[3]} ${themeCssVariables.spacing[4]};
-`;
-
-const StyledLiveBadge = styled.span`
-  background: ${themeCssVariables.accent.accent3};
-  border-radius: ${themeCssVariables.border.radius.pill};
-  color: ${themeCssVariables.accent.accent11};
-  padding: 0 ${themeCssVariables.spacing[2]};
-`;
-
-const StyledBody = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${themeCssVariables.spacing[4]};
-  padding: ${themeCssVariables.spacing[4]};
 `;
 
 const StyledLabel = styled.div`
@@ -72,11 +51,6 @@ const StyledSubValue = styled.div`
   color: ${themeCssVariables.font.color.secondary};
   font-size: ${themeCssVariables.font.size.sm};
   margin-top: ${themeCssVariables.spacing[1]};
-`;
-
-const StyledDivider = styled.div`
-  background: ${themeCssVariables.border.color.medium};
-  height: 1px;
 `;
 
 const StyledCalendar = styled.div`
@@ -168,23 +142,23 @@ export const FormatPreview = () => {
 
   return (
     <StyledPreview>
-      <StyledHeader>
-        {t`Preview`}
-        <StyledLiveBadge>{t`Live`}</StyledLiveBadge>
-      </StyledHeader>
-      <StyledBody>
-        <div>
+      <Card rounded backgroundColor={themeCssVariables.background.secondary}>
+        <CardHeader>
+          <StyledHeaderRow>
+            {t`Preview`}
+            <Tag color="blue" text={t`Live`} weight="medium" preventShrink />
+          </StyledHeaderRow>
+        </CardHeader>
+        <CardContent divider>
           <StyledLabel>{t`Date`}</StyledLabel>
           <StyledValue>{formatInTimeZone(now, timeZone, dateFormat)}</StyledValue>
-        </div>
-        <StyledDivider />
-        <div>
+        </CardContent>
+        <CardContent divider>
           <StyledLabel>{t`Time`}</StyledLabel>
           <StyledValue>{formatInTimeZone(now, timeZone, timeFormat)}</StyledValue>
           <StyledSubValue>{timeZoneLabel}</StyledSubValue>
-        </div>
-        <StyledDivider />
-        <div>
+        </CardContent>
+        <CardContent divider>
           <StyledLabel>{t`Number`}</StyledLabel>
           <StyledValue>
             {formatNumber(NUMBER_PREVIEW_VALUE, {
@@ -192,9 +166,8 @@ export const FormatPreview = () => {
               decimals: 2,
             })}
           </StyledValue>
-        </div>
-        <StyledDivider />
-        <div>
+        </CardContent>
+        <CardContent>
           <StyledLabel>
             {t`${monthLabel} · weeks start on ${startDayLabel}`}
           </StyledLabel>
@@ -211,8 +184,8 @@ export const FormatPreview = () => {
               </StyledDay>
             ))}
           </StyledCalendar>
-        </div>
-      </StyledBody>
+        </CardContent>
+      </Card>
     </StyledPreview>
   );
 };
