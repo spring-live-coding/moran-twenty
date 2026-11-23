@@ -4,6 +4,7 @@ import { SettingsRoutes } from '@/app/components/SettingsRoutes';
 import { VerifyLoginTokenEffect } from '@/auth/components/VerifyLoginTokenEffect';
 
 import { VerifyEmailEffect } from '@/auth/components/VerifyEmailEffect';
+import { DASHBOARD_OVERVIEW_PATH } from '@/dashboard-overview/constants/DashboardOverviewData';
 import indexAppPath from '@/navigation/utils/indexAppPath';
 import { BlankLayout } from '@/ui/layout/page/components/BlankLayout';
 import { DefaultLayout } from '@/ui/layout/page/components/DefaultLayout';
@@ -19,6 +20,12 @@ import {
 const RecordIndexPage = lazy(() =>
   import('~/pages/object-record/RecordIndexPage').then((module) => ({
     default: module.RecordIndexPage,
+  })),
+);
+
+const Dashboard = lazy(() =>
+  import('~/pages/dashboard/Dashboard').then((module) => ({
+    default: module.Dashboard,
   })),
 );
 
@@ -215,6 +222,14 @@ export const useCreateAppRouter = (
             element={
               <LazyRoute>
                 <RecordIndexPage />
+              </LazyRoute>
+            }
+          />
+          <Route
+            path={DASHBOARD_OVERVIEW_PATH}
+            element={
+              <LazyRoute>
+                <Dashboard />
               </LazyRoute>
             }
           />
