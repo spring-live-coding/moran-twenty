@@ -13,13 +13,14 @@ const SETTINGS_CONTENT_MAX_WIDTH = 760;
 const StyledSettingsPageContainer = styled.div<{
   width?: number;
   isMobile?: boolean;
+  maxWidth?: number;
 }>`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: ${themeCssVariables.spacing[8]};
   margin: 0 auto;
-  max-width: ${SETTINGS_CONTENT_MAX_WIDTH}px;
+  max-width: ${({ maxWidth }) => maxWidth ?? SETTINGS_CONTENT_MAX_WIDTH}px;
   overflow: auto;
   padding: ${themeCssVariables.spacing[6]} ${themeCssVariables.spacing[8]}
     ${themeCssVariables.spacing[8]};
@@ -37,8 +38,10 @@ const StyledSettingsPageContainer = styled.div<{
 
 export const SettingsPageContainer = ({
   children,
+  maxWidth,
 }: {
   children: ReactNode;
+  maxWidth?: number;
 }) => {
   const isMobile = useIsMobile();
   const location = useLocation();
@@ -60,7 +63,7 @@ export const SettingsPageContainer = ({
 
   return (
     <ScrollWrapper componentInstanceId={componentInstanceId}>
-      <StyledSettingsPageContainer isMobile={isMobile}>
+      <StyledSettingsPageContainer isMobile={isMobile} maxWidth={maxWidth}>
         {children}
       </StyledSettingsPageContainer>
     </ScrollWrapper>
